@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'MyDiet/my_diet_screen.dart';
 
 class DietToolsScreen extends StatelessWidget {
   const DietToolsScreen({super.key});
@@ -78,15 +79,42 @@ class DietToolsScreen extends StatelessWidget {
                         // Card 1: My Diet
                         _buildSingleCard(
                           onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Đã bấm vào trang My Diet!'),
-                                duration: Duration(seconds: 2),
-                                behavior: SnackBarBehavior.floating,
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionDuration: const Duration(
+                                  milliseconds: 300,
+                                ),
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        const MyDietScreen(), // 👈 màn hình bạn muốn chuyển tới
+
+                                transitionsBuilder:
+                                    (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                      child,
+                                    ) {
+                                      const begin = Offset(
+                                        0.0,
+                                        1.0,
+                                      ); // từ dưới lên
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeOutCubic;
+
+                                      final tween = Tween(
+                                        begin: begin,
+                                        end: end,
+                                      ).chain(CurveTween(curve: curve));
+
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                    },
                               ),
                             );
-                            // TODO: Add navigation logic here
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => YourNextScreen()));
                           },
                           icon: CupertinoIcons.flame_fill,
                           iconColor: Colors.white,
