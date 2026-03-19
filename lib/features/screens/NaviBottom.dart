@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../calories/presentation/pages/Shortcuts/shortcuts.dart';
+import '../diettools/diet_tools_screen.dart';
 
 class NaviBottom extends StatefulWidget {
   const NaviBottom({super.key});
@@ -68,6 +69,9 @@ class _NaviBottomState extends State<NaviBottom> {
             ],
           ),
           tabBuilder: (context, index) {
+            if (index == 1) {
+              return const DietToolsScreen();
+            }
             return CupertinoPageScaffold(
               navigationBar: const CupertinoNavigationBar(
                 middle: Text('Calorie Diet'),
